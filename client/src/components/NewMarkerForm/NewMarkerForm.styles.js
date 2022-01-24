@@ -37,8 +37,14 @@ export const FormWrapper = styled.form`
       }
     }
 
+    input {
+      margin-bottom: 6px;
+      border-color: ${({ errors, theme }) => errors.origin && theme.colors.error};
+    }
+
     textarea {
       min-height: 100px;
+      border-color: ${({ errors, theme }) => errors.about && theme.colors.error};
 
       &::-webkit-scrollbar {
         width: 8px;
@@ -58,6 +64,10 @@ export const FormWrapper = styled.form`
 
   label:last-child {
     margin-bottom: 0;
+  }
+
+  button {
+    display: none;
   }
 `;
 
@@ -92,4 +102,28 @@ export const NewGorillaForm = styled(Popup)`
   &.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {
     border-top-color: ${({ theme }) => theme.colors.grey};
   }
+`;
+
+export const NewGorillaContent = styled.div`
+  padding: 16px 12px;
+
+  h2 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  div {
+    background-color: ${({ theme }) => theme.colors.grey};
+    border-radius: 3px;
+    margin: 8px 0;
+    img {
+      margin: 0;
+    }
+  }
+`;
+
+export const ErrorWrapper = styled.p`
+  color: ${({ theme }) => theme.colors.error};
+  font-size: 14px;
 `;

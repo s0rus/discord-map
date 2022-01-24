@@ -98,36 +98,25 @@ const Map = ({ accessToken, setAccessToken }) => {
     return;
   };
 
-  const addNewUser = async () => {
+  const addNewUser = async (origin, about) => {
     const { id, username, avatar } = currentUser;
     const { longitude, latitude } = newMarker;
 
-    await axios.post(`${BASE_API_URL}/api/users`, {
-      userID: id,
-      username,
-      avatar,
-      position: { longitude, latitude },
-      origin: userInputs.origin,
-      about: userInputs.about,
-    });
-
-    setUsers((prevUsers) => [
-      ...prevUsers,
-      {
-        //nested to be aligned with what db returns
-        userID: {
-          $numberDecimal: id,
-        },
+    try {
+      const { data: addedUser } = await axios.post(`${BASE_API_URL}/api/users`, {
+        userID: id,
         username,
         avatar,
         position: { longitude, latitude },
-        origin: userInputs.origin,
-        about: userInputs.about,
-        createdAt: new Date().toLocaleDateString(),
-      },
-    ]);
+        origin,
+        about,
+      });
 
-    setNewMarker(null);
+      setUsers((prevUsers) => [...prevUsers, addedUser]);
+      setNewMarker(null);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -172,7 +161,7 @@ const Map = ({ accessToken, setAccessToken }) => {
                   longitude={newMarker.longitude}
                   latitude={newMarker.latitude}
                   setNewMarker={setNewMarker}
-                  addNewUser={addNewUser}
+                  addNewUser={(origin, about) => addNewUser(origin, about)}
                   currentUser={currentUser}
                   userInputs={userInputs}
                   setUserInputs={setUserInputs}

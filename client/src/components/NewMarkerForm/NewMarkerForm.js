@@ -1,31 +1,22 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useForm } from 'react-hook-form';
 import { Marker } from 'react-map-gl';
 import { MarkerImage } from '../Markers/Markers.styles';
 import HarambeEZ from '../../assets/icons/harambeez.webp';
-import { ButtonBar, FormWrapper, NewGorillaForm } from './NewMarkerForm.styles';
-import { NewGorillaContent } from '../../views/Map/Map.styles';
+import { ButtonBar, ErrorWrapper, FormWrapper, NewGorillaContent, NewGorillaForm } from './NewMarkerForm.styles';
 import Button from '../Button/Button';
 import CurrentUserInfo from '../CurrentUserInfo/CurrentUserInfo';
 
 const NewMarkerForm = ({ longitude, latitude, setNewMarker, addNewUser, currentUser, userInputs, setUserInputs }) => {
-  const handleNewOrigin = ({ target }) => {
-    if (target.value.length <= 30) {
-      setUserInputs((prevInputs) => ({
-        ...prevInputs,
-        origin: target.value,
-      }));
-    }
-    return;
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const submitButtonRef = useRef(null);
 
-  const handleNewAbout = ({ target }) => {
-    if (target.value.length <= 100) {
-      setUserInputs((prevInputs) => ({
-        ...prevInputs,
-        about: target.value,
-      }));
-    }
-    return;
+  const onSubmit = ({ origin, about }) => {
+    addNewUser(origin, about);
   };
 
   return (
@@ -47,20 +38,23 @@ const NewMarkerForm = ({ longitude, latitude, setNewMarker, addNewUser, currentU
           <h2>DOŁĄCZ DO GORYLI</h2>
           <p>Zapisujesz się jako...</p>
           <CurrentUserInfo currentUser={currentUser} />
-          <FormWrapper>
+          <FormWrapper onSubmit={handleSubmit(onSubmit)} errors={errors}>
             <label htmlFor='origin'>
               <p>Skąd jesteś?</p>
-              <input name='origin' id='origin' value={userInputs.origin} onChange={handleNewOrigin} />
+              <input {...register('origin', { required: true })} name='origin' id='origin' />
+              {errors.origin ? <ErrorWrapper>Musisz napisać skąd jesteś!</ErrorWrapper> : null}
             </label>
             <label htmlFor='about'>
               <p>Napisz coś o sobie!</p>
-              <textarea name='about' id='about' value={userInputs.about} onChange={handleNewAbout} />
+              <textarea {...register('about', { required: true })} name='about' id='about' />
+              {errors.about ? <ErrorWrapper>Musisz napisać coś o sobie!</ErrorWrapper> : null}
             </label>
+            <button type='submit' ref={submitButtonRef} />
           </FormWrapper>
         </NewGorillaContent>
         <ButtonBar>
           <Button onClick={() => setNewMarker(null)}>Anuluj</Button>
-          <Button onClick={addNewUser} isPrimary>
+          <Button onClick={() => submitButtonRef.current.click()} isPrimary>
             Potwierdź
           </Button>
         </ButtonBar>
