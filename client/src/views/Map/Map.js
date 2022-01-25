@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ReactMapGL from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import CurrentUserInfo from '../../components/CurrentUserInfo/CurrentUserInfo';
@@ -13,6 +14,8 @@ import SecondaryUserInfo from '../../components/SecondaryUserInfo/SecondaryUserI
 import AdditionalSidebarInfo from '../../components/AdditionalSidebarInfo/AdditionalSidebarInfo';
 import Footer from '../../components/Footer/Footer';
 import Loader from '../../components/Loader/Loader';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const BASE_API_URL =
   process.env.REACT_APP_NODE_ENV === 'developement' ? 'http://192.168.1.50:1337' : process.env.REACT_APP_BASE_API_URL;
