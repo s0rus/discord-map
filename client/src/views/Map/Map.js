@@ -5,14 +5,10 @@ import ReactMapGL from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import CurrentUserInfo from '../../components/CurrentUserInfo/CurrentUserInfo';
 import { MapContainer, Wrapper } from './Map.styles';
 import { useWindowSize } from '../../utils/useWindowSize';
 import Markers from '../../components/Markers/Markers';
 import NewMarkerForm from '../../components/NewMarkerForm/NewMarkerForm';
-import SecondaryUserInfo from '../../components/SecondaryUserInfo/SecondaryUserInfo';
-import AdditionalSidebarInfo from '../../components/AdditionalSidebarInfo/AdditionalSidebarInfo';
-import Footer from '../../components/Footer/Footer';
 import Loader from '../../components/Loader/Loader';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
@@ -45,30 +41,68 @@ const Map = ({ accessToken, setAccessToken }) => {
       const checkIfGorilla = async () => {
         const response = await axios.get(`${BASE_API_URL}/guilds/${accessToken}`);
         const isGorilla = await response.data.filter((field) => field.id === process.env.REACT_APP_DISCORD_SERVER_ID);
-        if (!isGorilla.length)
-          navigate('/yikes', {
-            state: 'NOT_A_GORILLA',
-          });
+        if (!isGorilla.length) return false;
+        return true;
       };
 
       const getUserInfo = async () => {
-        const response = await axios.get(`${BASE_API_URL}/userinfo/${accessToken}`);
-        if (response.data) {
-          setCurrentUser({
-            ...response.data,
-          });
+        const userDataResponse = await axios.get(`${BASE_API_URL}/userinfo/${accessToken}`);
+        const { data: userData } = userDataResponse;
+
+        if (userData) {
+          const sufficientRoles = [
+            '613377505994342556',
+            '613376795378450522',
+            '613377502567727144',
+            '613376790852927539',
+            '613376791448649738',
+            '613376792371134464',
+            '613382760018608128',
+            '613376792509677577',
+            '613376774654394400',
+          ];
+
+          const guildDataResponse = await axios.get(
+            `${BASE_API_URL}/userroles/${process.env.REACT_APP_DISCORD_SERVER_ID}/${userData.id}`
+          );
+          const { data: guildData } = guildDataResponse;
+
+          if (guildData) {
+            await setCurrentUser({ ...userData, nickname: guildData.nick, serverAvatar: guildData.user.avatar });
+            //potiential avatar update, addition of server nickname and avatar
+            await axios.put(`${BASE_API_URL}/api/users/${userData.id}`, {
+              ...userData,
+              nickname: guildData.nick,
+              serverAvatar: guildData.user.avatar,
+            });
+
+            const isLeveled = guildData.roles.some((role) => sufficientRoles.includes(role));
+            if (!isLeveled) return false;
+            return true;
+          }
         }
       };
 
       const getMarkers = async () => {
-        const response = await axios.get(`${BASE_API_URL}/api/users`);
-        setUsers(response.data);
+        const markersResponse = await axios.get(`${BASE_API_URL}/api/users`);
+        const { data: markersData } = markersResponse;
+        if (markersResponse) {
+          await setUsers(markersData);
+        }
       };
 
       const handleLogin = async () => {
-        await checkIfGorilla();
-        await getUserInfo();
-        await getMarkers();
+        if (await checkIfGorilla()) {
+          if (await getUserInfo()) {
+            await getMarkers();
+          } else {
+            navigate('/yikes', { state: 'INSUFFICIENT_LEVEL' });
+          }
+        } else {
+          navigate('/yikes', {
+            state: 'NOT_A_GORILLA',
+          });
+        }
         toggleLoading(false);
       };
 
@@ -102,7 +136,7 @@ const Map = ({ accessToken, setAccessToken }) => {
   };
 
   const addNewUser = async (origin, about) => {
-    const { id, username, avatar } = currentUser;
+    const { id, username, nickname, avatar, serverAvatar } = currentUser;
     const { longitude, latitude } = newMarker;
 
     try {
@@ -113,6 +147,8 @@ const Map = ({ accessToken, setAccessToken }) => {
         position: { longitude, latitude },
         origin,
         about,
+        nickname,
+        serverAvatar,
       });
 
       setUsers((prevUsers) => [...prevUsers, addedUser]);
@@ -128,27 +164,17 @@ const Map = ({ accessToken, setAccessToken }) => {
         <Loader />
       ) : (
         <Wrapper>
-          <Sidebar>
-            <CurrentUserInfo
-              currentUser={currentUser}
-              accessToken={accessToken}
-              setAccessToken={setAccessToken}
-              setUsers={setUsers}
-              setUserDetails={setUserDetails}
-              isUserSaved={users.filter((user) => user.userID.$numberDecimal === currentUser.id).length}
-            />
-            <AdditionalSidebarInfo
-              isUserSaved={users.filter((user) => user.userID.$numberDecimal === currentUser.id).length}
-            />
-            <SecondaryUserInfo
-              userData={userDetails}
-              users={users}
-              setUserDetails={setUserDetails}
-              setViewport={setViewport}
-              currentUser={currentUser}
-            />
-            <Footer />
-          </Sidebar>
+          <Sidebar
+            currentUser={currentUser}
+            accessToken={accessToken}
+            setAccessToken={setAccessToken}
+            users={users}
+            setUsers={setUsers}
+            setUserDetails={setUserDetails}
+            isUserSaved={users.filter((user) => user.userID.$numberDecimal === currentUser.id).length}
+            userDetails={userDetails}
+            setViewport={setViewport}
+          />
           <MapContainer>
             <ReactMapGL
               {...viewport}

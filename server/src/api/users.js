@@ -13,6 +13,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
+  console.log(req.body);
   try {
     const userInfo = new UserInfo(req.body);
     const createdUser = await userInfo.save();
@@ -28,6 +29,23 @@ router.delete('/:userID', async (req, res, next) => {
     await UserInfo.findOneAndDelete({
       userID: userID,
     });
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/:userID', async (req, res, next) => {
+  try {
+    const { userID } = req.params;
+    await UserInfo.findOneAndUpdate(
+      {
+        userID: userID,
+      },
+      {
+        ...req.body,
+      }
+    );
     res.sendStatus(200);
   } catch (error) {
     next(error);

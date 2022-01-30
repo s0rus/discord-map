@@ -60,6 +60,7 @@ app.get('/guilds/:ACCESS_TOKEN', async (req, res, next) => {
 
     res.json(response.data);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });
@@ -77,10 +78,26 @@ app.get('/userinfo/:ACCESS_TOKEN', async (req, res, next) => {
   }
 });
 
+//https://discord.com/api/v8/guilds/551851567523823649/members/255575107391586314
+app.get('/userroles/:SERVER_ID/:USER_ID', async (req, res, next) => {
+  try {
+    const URL = `${BASE_URL}/guilds/${req.params.SERVER_ID}/members/${req.params.USER_ID}`;
+    const response = await axios.get(URL, {
+      headers: {
+        Authorization: `Bot ${process.env.BOT_TOKEN}`,
+      },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 app.use('/api/users/', users);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Listening on https://mapa-goryli-api.herokuapp.com/:${PORT}`);
+  console.log(`Listening on http://192.168.1.50:1337`);
 });

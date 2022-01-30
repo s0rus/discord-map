@@ -121,9 +121,21 @@ export const NewGorillaContent = styled.div`
       margin: 0;
     }
   }
+
+  label {
+    p {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 `;
 
 export const ErrorWrapper = styled.p`
   color: ${({ theme }) => theme.colors.error};
   font-size: 14px;
+`;
+
+export const AboutLengthSpan = styled.span`
+  color: ${({ theme }) => theme.colors.confirm};
+  font-weight: bold;
 `;

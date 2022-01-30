@@ -13,10 +13,23 @@ import {
   UserOriginContainer,
   Wrapper,
 } from './UserDetails.styles';
+import HarambeEZ from '../../assets/icons/harambeez.webp';
+import { FlyToInterpolator } from 'react-map-gl';
+import { easeQuad } from 'd3-ease';
 
-const UserDetails = ({ userData, setUserDetails }) => {
-  const getUserPositionString = ({ longitude, latitude }) => {
-    return `${latitude.toFixed(4)} ${latitude > 0 ? 'N' : 'S'} • ${longitude.toFixed(4)} ${longitude > 0 ? 'E' : 'W'}`;
+const UserDetails = ({ userData, setUserDetails, setViewport }) => {
+  const { longitude, latitude } = userData.position;
+
+  const handleCenterOnUser = () => {
+    setViewport((prevViewport) => ({
+      ...prevViewport,
+      longitude,
+      latitude,
+      zoom: 10,
+      transitionDuration: 1000,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionEasing: easeQuad,
+    }));
   };
 
   return (
@@ -29,15 +42,22 @@ const UserDetails = ({ userData, setUserDetails }) => {
           <StyledUserAvatar
             src={`https://cdn.discordapp.com/avatars/${userData?.userID.$numberDecimal}/${userData?.avatar}.png`}
             alt={`${userData?.username} avatar`}
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null;
+              currentTarget.src = HarambeEZ;
+            }}
           />
           <UserName title={userData.username}>{userData.username}</UserName>
         </UserHeader>
         <UserInfo>
           <UserOriginContainer>
-            <MapPin />
+            <MapPin onClick={handleCenterOnUser} />
             <div>
               <UserOrigin title={userData.origin}>{userData.origin}</UserOrigin>
-              <p>{getUserPositionString(userData.position)}</p>
+              <p>
+                {`${latitude.toFixed(4)}`}&deg;{` ${latitude > 0 ? 'N' : 'S'}`}
+                {` • ${longitude.toFixed(4)}`}&deg;{` ${longitude > 0 ? 'E' : 'W'}`}
+              </p>
             </div>
           </UserOriginContainer>
           <UserAbout>

@@ -1,32 +1,48 @@
 import React from 'react';
-import styled from 'styled-components';
+import SidebarAlert from '../SidebarAlert/SidebarAlert';
+import CurrentUserInfo from '../CurrentUserInfo/CurrentUserInfo';
+import UserDetails from '../UserDetails/UserDetails';
+import UsersList from '../UsersList/UsersList';
+import Footer from '../Footer/Footer';
+import { Content, Logo, Wrapper } from './Sidebar.styles';
 
-const Wrapper = styled.aside`
-  min-width: 420px;
-  max-width: 420px;
-  height: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-flow: column nowrap;
-
-  background-color: ${({ theme }) => theme.colors.grey};
-`;
-
-const Logo = styled.h2`
-  width: 100%;
-  padding: 0 16px;
-
-  font-size: 42px;
-  text-align: center;
-`;
-
-const Sidebar = ({ children }) => {
+const Sidebar = ({
+  currentUser,
+  accessToken,
+  setAccessToken,
+  users,
+  setUsers,
+  setUserDetails,
+  isUserSaved,
+  userDetails,
+  setViewport,
+}) => {
   return (
     <Wrapper>
-      <Logo>MAPA GORYLI</Logo>
-      {children}
+      <Logo>MAPA GORYLI 🗺</Logo>
+      <CurrentUserInfo
+        currentUser={currentUser}
+        accessToken={accessToken}
+        setAccessToken={setAccessToken}
+        setUsers={setUsers}
+        setUserDetails={setUserDetails}
+        isUserSaved={isUserSaved}
+      />
+      <SidebarAlert isUserSaved={isUserSaved} />
+      <Content>
+        {userDetails ? (
+          <UserDetails userData={userDetails} setUserDetails={setUserDetails} setViewport={setViewport} />
+        ) : (
+          <UsersList
+            userData={userDetails}
+            users={users}
+            setUserDetails={setUserDetails}
+            setViewport={setViewport}
+            currentUser={currentUser}
+          />
+        )}
+      </Content>
+      <Footer />
     </Wrapper>
   );
 };

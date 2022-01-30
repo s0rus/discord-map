@@ -12,6 +12,7 @@ import {
   PeaceOutButton,
 } from './CurrentUserInfo.styles';
 import axios from 'axios';
+import HarambeEZ from '../../assets/icons/harambeez.webp';
 
 const BASE_API_URL =
   process.env.REACT_APP_NODE_ENV === 'developement' ? 'http://192.168.1.50:1337' : process.env.REACT_APP_BASE_API_URL;
@@ -36,12 +37,18 @@ const CurrentUserInfo = ({ currentUser, accessToken, setAccessToken, setUsers, s
   return (
     <Wrapper>
       <UserAvatar
-        src={`https://cdn.discordapp.com/avatars/${currentUser?.id}/${currentUser?.avatar}.png`}
+        src={`https://cdn.discordapp.com/avatars/${currentUser?.id}/${
+          currentUser?.serverAvatar || currentUser?.avatar
+        }.png`}
         alt={`${currentUser?.username} avatar`}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null;
+          currentTarget.src = HarambeEZ;
+        }}
       />
       <UserSpecifics>
         <UserName>
-          <h3>{currentUser?.username}</h3>
+          <h3>{currentUser?.nickname || currentUser?.username}</h3>
           <span>#{currentUser?.discriminator}</span>
         </UserName>
         {accessToken && setAccessToken ? (
