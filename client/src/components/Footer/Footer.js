@@ -7,6 +7,10 @@ const Wrapper = styled.footer`
 
   color: ${({ theme }) => theme.colors.lightGrey};
   text-align: center;
+
+  @media all and (min-width: 2560px) {
+    font-size: 20px;
+  }
 `;
 
 const Footer = () => {

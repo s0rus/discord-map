@@ -14,6 +14,10 @@ export const InformationContainer = styled.div`
   border: 2px solid ${({ theme }) => theme.colors.confirm};
   background-color: ${({ theme }) => theme.colors.dark};
 
+  @media all and (min-width: 2560px) {
+    font-size: 24px;
+  }
+
   p {
     margin-left: 8px;
   }

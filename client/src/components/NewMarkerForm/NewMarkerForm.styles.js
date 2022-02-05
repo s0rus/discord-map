@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Popup } from 'react-map-gl';
+import Button from '../Button/Button';
 
 export const ButtonBar = styled.div`
   padding: 16px 12px;
@@ -10,6 +11,12 @@ export const ButtonBar = styled.div`
 
   background-color: ${({ theme }) => theme.colors.grey};
   border-radius: 0 0 3px 3px;
+
+  @media all and (min-width: 2560px) {
+    button {
+      font-size: 24px;
+    }
+  }
 `;
 
 export const FormWrapper = styled.form`
@@ -35,6 +42,10 @@ export const FormWrapper = styled.form`
         border-color: ${({ theme }) => theme.colors.confirm};
         outline: none;
       }
+
+      @media all and (min-width: 2560px) {
+        font-size: 24px;
+      }
     }
 
     input {
@@ -45,6 +56,10 @@ export const FormWrapper = styled.form`
     textarea {
       min-height: 100px;
       border-color: ${({ errors, theme }) => errors.about && theme.colors.error};
+
+      @media all and (min-width: 2560px) {
+        min-height: 200px;
+      }
 
       &::-webkit-scrollbar {
         width: 8px;
@@ -78,6 +93,10 @@ export const NewGorillaForm = styled(Popup)`
     min-width: 300px;
     background-color: ${({ theme }) => theme.colors.dark};
     cursor: default;
+
+    @media all and (min-width: 2560px) {
+      min-width: 450px;
+    }
   }
 
   &.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
@@ -107,22 +126,41 @@ export const NewGorillaForm = styled(Popup)`
 export const NewGorillaContent = styled.div`
   padding: 16px 12px;
 
+  @media all and (min-width: 2560px) {
+    padding: 32px 24px;
+    font-size: 24px;
+  }
+
   h2 {
     font-size: 24px;
     text-align: center;
     margin-bottom: 16px;
+
+    @media all and (min-width: 2560px) {
+      font-size: 32px;
+    }
   }
 
   div {
     background-color: ${({ theme }) => theme.colors.grey};
     border-radius: 3px;
     margin: 8px 0;
+    padding: 4px;
+
     img {
       margin: 0;
+    }
+
+    @media all and (min-width: 2560px) {
+      padding: 8px;
     }
   }
 
   label {
+    @media all and (min-width: 2560px) {
+      font-size: 24px;
+    }
+
     p {
       display: flex;
       justify-content: space-between;
@@ -133,9 +171,45 @@ export const NewGorillaContent = styled.div`
 export const ErrorWrapper = styled.p`
   color: ${({ theme }) => theme.colors.error};
   font-size: 14px;
+
+  @media all and (min-width: 2560px) {
+    font-size: 20px;
+  }
 `;
 
 export const AboutLengthSpan = styled.span`
   color: ${({ theme }) => theme.colors.confirm};
   font-weight: bold;
+
+  @media all and (min-width: 2560px) {
+    font-size: 20px;
+  }
+`;
+
+export const FormButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.2s ease-in-out;
+
+  width: 100px;
+
+  @media all and (min-width: 2560px) {
+    width: 140px;
+  }
+
+  &[disabled] {
+    width: 130px;
+
+    @media all and (min-width: 2560px) {
+      width: 170px;
+    }
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+
+    margin-right: 8px;
+  }
 `;

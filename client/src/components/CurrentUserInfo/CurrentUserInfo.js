@@ -39,7 +39,7 @@ const CurrentUserInfo = ({ currentUser, accessToken, setAccessToken, setUsers, s
       <UserAvatar
         src={`https://cdn.discordapp.com/avatars/${currentUser?.id}/${
           currentUser?.serverAvatar || currentUser?.avatar
-        }.png`}
+        }.jpg`}
         alt={`${currentUser?.username} avatar`}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;

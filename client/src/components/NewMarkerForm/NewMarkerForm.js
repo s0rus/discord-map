@@ -7,12 +7,14 @@ import {
   AboutLengthSpan,
   ButtonBar,
   ErrorWrapper,
+  FormButton,
   FormWrapper,
   NewGorillaContent,
   NewGorillaForm,
 } from './NewMarkerForm.styles';
-import Button from '../Button/Button';
 import CurrentUserInfo from '../CurrentUserInfo/CurrentUserInfo';
+import { ReactComponent as Spinner } from '../../assets/icons/spinner.svg';
+import Button from '../Button/Button';
 
 const NewMarkerForm = ({ longitude, latitude, setNewMarker, addNewUser, currentUser }) => {
   const {
@@ -24,9 +26,12 @@ const NewMarkerForm = ({ longitude, latitude, setNewMarker, addNewUser, currentU
   const submitButtonRef = useRef(null);
   const watchAbout = watch('about', false);
   const [aboutLength, setAboutLength] = useState(0);
+  const [isLoading, toggleIsLoading] = useState(false);
 
-  const onSubmit = ({ origin, about }) => {
-    addNewUser(origin, about);
+  const onSubmit = async ({ origin, about }) => {
+    await toggleIsLoading(true);
+    await addNewUser(origin, about);
+    await toggleIsLoading(false);
   };
 
   useEffect(() => {
@@ -74,10 +79,14 @@ const NewMarkerForm = ({ longitude, latitude, setNewMarker, addNewUser, currentU
           </FormWrapper>
         </NewGorillaContent>
         <ButtonBar>
-          <Button onClick={() => setNewMarker(null)}>Anuluj</Button>
-          <Button onClick={() => submitButtonRef.current.click()} isPrimary>
-            Potwierdź
+          <Button onClick={() => setNewMarker(null)} disabled={isLoading}>
+            Anuluj
           </Button>
+          <FormButton onClick={() => submitButtonRef.current.click()} isPrimary disabled={isLoading}>
+            {isLoading ? <Spinner /> : null}
+
+            <span>Potwierdź</span>
+          </FormButton>
         </ButtonBar>
       </NewGorillaForm>
     </>

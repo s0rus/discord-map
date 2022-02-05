@@ -10,6 +10,9 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-flow: column;
+
+  text-align: center;
 
   img {
     width: 64px;
@@ -17,11 +20,19 @@ const Wrapper = styled.div`
   }
 `;
 
-const Loader = () => {
+const Loader = ({ error }) => {
   return (
     <Wrapper>
-      <img src={Harambe} alt='Harambe' />
-      <img src={Hyperclap} alt='Hyperclap' />
+      <div>
+        <img src={Harambe} alt='Harambe' />
+        <img src={Hyperclap} alt='Hyperclap' />
+      </div>
+      {error ? (
+        <div>
+          <h1>Serwer się dusi...</h1>
+          <p>{error}</p>
+        </div>
+      ) : null}
     </Wrapper>
   );
 };

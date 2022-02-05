@@ -7,9 +7,11 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import { MapContainer, Wrapper } from './Map.styles';
 import { useWindowSize } from '../../utils/useWindowSize';
+import { sufficientRoles } from '../../utils/sufficientRoles';
 import Markers from '../../components/Markers/Markers';
 import NewMarkerForm from '../../components/NewMarkerForm/NewMarkerForm';
 import Loader from '../../components/Loader/Loader';
+import { errorMessages } from '../../utils/errorMessages';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
@@ -35,14 +37,19 @@ const Map = ({ accessToken, setAccessToken }) => {
     origin: '',
     about: '',
   });
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (accessToken) {
       const checkIfGorilla = async () => {
-        const response = await axios.get(`${BASE_API_URL}/guilds/${accessToken}`);
-        const isGorilla = await response.data.filter((field) => field.id === process.env.REACT_APP_DISCORD_SERVER_ID);
-        if (!isGorilla.length) return false;
-        return true;
+        const isGorillaResponse = await axios.get(`${BASE_API_URL}/guilds/${accessToken}`);
+        if (isGorillaResponse) {
+          const isGorilla = await isGorillaResponse.data.filter(
+            (field) => field.id === process.env.REACT_APP_DISCORD_SERVER_ID
+          );
+          if (!isGorilla.length) return false;
+          return true;
+        } else throw new Error('Coś poszło nie tak...');
       };
 
       const getUserInfo = async () => {
@@ -50,18 +57,6 @@ const Map = ({ accessToken, setAccessToken }) => {
         const { data: userData } = userDataResponse;
 
         if (userData) {
-          const sufficientRoles = [
-            '613377505994342556',
-            '613376795378450522',
-            '613377502567727144',
-            '613376790852927539',
-            '613376791448649738',
-            '613376792371134464',
-            '613382760018608128',
-            '613376792509677577',
-            '613376774654394400',
-          ];
-
           const guildDataResponse = await axios.get(
             `${BASE_API_URL}/userroles/${process.env.REACT_APP_DISCORD_SERVER_ID}/${userData.id}`
           );
@@ -92,25 +87,25 @@ const Map = ({ accessToken, setAccessToken }) => {
       };
 
       const handleLogin = async () => {
-        if (await checkIfGorilla()) {
-          if (await getUserInfo()) {
-            await getMarkers();
+        try {
+          if (await checkIfGorilla()) {
+            if (await getUserInfo()) {
+              await getMarkers();
+            } else {
+              navigate('/yikes', { state: 'INSUFFICIENT_LEVEL' });
+            }
           } else {
-            navigate('/yikes', { state: 'INSUFFICIENT_LEVEL' });
+            navigate('/yikes', {
+              state: 'NOT_A_GORILLA',
+            });
           }
-        } else {
-          navigate('/yikes', {
-            state: 'NOT_A_GORILLA',
-          });
+          toggleLoading(false);
+        } catch (error) {
+          setError(errorMessages.loginError);
         }
-        toggleLoading(false);
       };
 
-      try {
-        handleLogin();
-      } catch (error) {
-        console.log(error);
-      }
+      handleLogin();
     } else {
       navigate('/login');
     }
@@ -161,7 +156,9 @@ const Map = ({ accessToken, setAccessToken }) => {
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <>
+          <Loader error={error} />
+        </>
       ) : (
         <Wrapper>
           <Sidebar
