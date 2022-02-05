@@ -1,16 +1,18 @@
-# SUFFICENT LVL GUILD ROLES:
+# MAPA GORYLI
 
-- 613377505994342556 - LVL: Dusiciel
-- 613376795378450522 - LVL: Marynarz
-- 613377502567727144 - LVL: Pirat
-- 613376790852927539 - LVL: Kwatermistrz
-- 613376791448649738 - LVL: KAPITAN
-- 613376792371134464 - LVL: SZABLUCH
-- 613382760018608128 - LVL: _GORYL_
-- 613376792509677577 - LVL: **ALFA GORYL**
-- 613376774654394400 - LVL: **_HARAMBE_**
+This app's purpose is to give a certain discord community a way to know eachother better
+and let them know where they are from by logging all saved users as markers on a map.
+When the marker is clicked you get all the info about a concrete user you need.
+The list also serves as a navigation, when the user from it is clicked, the map
+centers on them and displays all the info.
 
-# INSUFFICENT LVL GUILD ROLES:
+I used the following things to create this app:
 
-- 613377510725517313 - LVL: Nowobuła
-- 613377508867571734 - LVL: Degenerat
+- REACT
+- REACT ROUTER
+- STYLED COMPONENTS
+- REACT-HOOK-FORM
+- MAPBOX API + REACT-MAP-GL
+- DISCORD API
+- EXPRESS.JS
+- AXIOS
