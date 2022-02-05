@@ -32,6 +32,11 @@ export const UserAvatar = styled.img`
 
   border-radius: 50%;
   border: 2px solid ${({ theme }) => theme.colors.confirm};
+
+  @media all and (min-width: 2560px) {
+    width: 64px;
+    height: 64px;
+  }
 `;
 
 export const UsersList = styled.ul`
@@ -87,6 +92,10 @@ export const ListHeader = styled.h2`
   padding-left: 8px;
 
   border-left: 4px solid ${({ theme }) => theme.colors.confirm};
+
+  @media all and (min-width: 2560px) {
+    font-size: 32px;
+  }
 `;
 
 export const UserSubInfo = styled.div`
@@ -107,10 +116,18 @@ export const UserSubInfo = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+
+    @media all and (min-width: 2560px) {
+      font-size: 24px;
+    }
   }
 
   p {
     font-size: 12px;
     color: ${({ theme }) => theme.colors.lightGrey};
+
+    @media all and (min-width: 2560px) {
+      font-size: 16px;
+    }
   }
 `;

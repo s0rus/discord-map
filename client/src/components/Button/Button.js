@@ -14,6 +14,10 @@ const StyledButton = styled.button`
     text-decoration: ${({ isPrimary }) => (isPrimary ? 'none' : 'underline')};
     background-color: ${({ isPrimary, theme }) => (isPrimary ? theme.colors.confirmHover : 'transparent')};
   }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
 `;
 
 export const Button = (props) => {

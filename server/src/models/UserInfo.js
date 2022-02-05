@@ -8,6 +8,10 @@ const UserInfoSchema = new Schema(
       type: String,
       required: true,
     },
+    nickname: {
+      type: String,
+      required: true,
+    },
     userID: {
       type: Schema.Types.Decimal128,
       required: true,
@@ -25,12 +29,18 @@ const UserInfoSchema = new Schema(
     origin: {
       type: String,
       required: true,
+      maxlength: 30,
     },
     about: {
       type: String,
       required: true,
+      maxlength: 256,
     },
     avatar: {
+      type: String,
+      required: true,
+    },
+    serverAvatar: {
       type: String,
       required: true,
     },

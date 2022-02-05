@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Marker } from 'react-map-gl';
 import { MarkerImage } from './Markers.styles';
+import HarambeEZ from '../../assets/icons/harambeez.webp';
 
 const Markers = ({ users, setUserDetails }) => {
   return useMemo(
@@ -18,6 +19,10 @@ const Markers = ({ users, setUserDetails }) => {
             <MarkerImage
               src={`https://cdn.discordapp.com/avatars/${user?.userID.$numberDecimal}/${user?.avatar}.png`}
               alt='avatar'
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null;
+                currentTarget.src = HarambeEZ;
+              }}
             />
           </Marker>
         </React.Fragment>

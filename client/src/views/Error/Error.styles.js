@@ -36,6 +36,7 @@ export const Container = styled.div`
   p {
     text-align: center;
     padding: 0 16px;
+    margin-bottom: 32px;
   }
 
   @media all and (min-width: 425px) {

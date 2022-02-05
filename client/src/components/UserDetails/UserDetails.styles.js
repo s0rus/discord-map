@@ -87,6 +87,8 @@ export const UserOriginContainer = styled.li`
     max-height: 48px;
 
     stroke: ${({ theme }) => theme.colors.confirm};
+
+    cursor: pointer;
   }
 
   div {
