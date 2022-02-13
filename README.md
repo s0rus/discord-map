@@ -17,4 +17,4 @@ I used the following things to create this app:
 - EXPRESS.JS
 - AXIOS
 
-[![mapa-goryli.jpg](https://i.postimg.cc/LXndnqsk/mapa-goryli.jpg)](Page after authorization)
+[![mapa-goryli.jpg](https://i.postimg.cc/LXndnqsk/mapa-goryli.jpg)](https://postimg.cc/5YdKr2Lj)
