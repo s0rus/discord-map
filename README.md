@@ -18,5 +18,8 @@ I used the following things to create this app:
 - AXIOS
 
 ### PAGE AFTER AUTHORIZATION:
+<<<<<<< HEAD
 
+=======
+>>>>>>> e6217aafe54e1145047e976a42489552160b3e00
 [![mapa-goryli.jpg](https://i.postimg.cc/LXndnqsk/mapa-goryli.jpg)](https://postimg.cc/5YdKr2Lj)
