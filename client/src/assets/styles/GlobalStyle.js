@@ -34,7 +34,7 @@ export const GlobalStyle = createGlobalStyle`
       height: inherit;
     }
   }
-
+  
   a {
     font-family: inherit;
     font-size: inherit;
