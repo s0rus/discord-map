@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Header, LoginContent, Wrapper } from './DiscordLogin.styles';
 import DiscordLoginButton from '../../components/DiscordLoginButton/DiscordLoginButton';
@@ -19,7 +19,7 @@ const DiscordLogin = ({ accessToken, setAccessToken }) => {
 
   useEffect(() => {
     if (accessToken) {
-      navigate('/');
+      navigate('/mapagoryli');
     }
   }, [accessToken, navigate]);
 
@@ -38,7 +38,7 @@ const DiscordLogin = ({ accessToken, setAccessToken }) => {
           toggleLoading(true);
           const authInfo = await getAuthInfo(code);
           const { access_token, expires_in } = authInfo;
-          document.cookie = `access_token=${access_token}; max-age=${expires_in}; path=/`;
+          document.cookie = `access_token=${access_token}; max-age=${expires_in}; path=/mapagoryli`;
           setAccessToken(access_token);
           toggleLoading(false);
         } catch (error) {
@@ -53,7 +53,7 @@ const DiscordLogin = ({ accessToken, setAccessToken }) => {
 
   const handleGoBack = async () => {
     await setErorr(null);
-    navigate('/login');
+    navigate('/mapagoryli/login');
   };
 
   return (

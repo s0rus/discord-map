@@ -19,13 +19,13 @@ const Root = () => {
       <Router>
         <Routes>
           <Route
-            path='/'
+            path='/mapagoryli'
             element={
               width > 768 ? <Map accessToken={accessToken} setAccessToken={setAccessToken} /> : <MobileUnsuported />
             }
           />
           <Route
-            path='/login'
+            path='/mapagoryli/login'
             element={
               width > 768 ? (
                 <DiscordLogin accessToken={accessToken} setAccessToken={setAccessToken} />
@@ -34,7 +34,7 @@ const Root = () => {
               )
             }
           />
-          <Route path='*' element={<Error accessToken={accessToken} setAccessToken={setAccessToken} />} />
+          <Route path='/mapagoryli/*' element={<Error accessToken={accessToken} setAccessToken={setAccessToken} />} />
         </Routes>
       </Router>
     </ThemeProvider>

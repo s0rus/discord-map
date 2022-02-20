@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlyToInterpolator } from 'react-map-gl';
 import { easeQuad } from 'd3-ease';
-import { ListHeader, UserAvatar, UserListItem, UsersList, UserSubInfo, Wrapper } from './UsersList.styles';
+import { ListHeader, UserAvatar, UserListItem, UsersList, UserSubInfo } from './UsersList.styles';
 import HarambeEZ from '../../assets/icons/harambeez.webp';
 
 const SecondaryUserInfo = ({ userData, users, setUserDetails, setViewport, currentUser }) => {

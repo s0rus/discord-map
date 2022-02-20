@@ -21,9 +21,9 @@ const CurrentUserInfo = ({ currentUser, accessToken, setAccessToken, setUsers, s
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    document.cookie = `access_token=${accessToken}; max-age=0; path=/`;
+    document.cookie = `access_token=${accessToken}; max-age=0; path=/mapagoryli`;
     setAccessToken(null);
-    navigate('/login');
+    navigate('/mapagoryli/login');
   };
 
   const handlePeaceOut = async () => {

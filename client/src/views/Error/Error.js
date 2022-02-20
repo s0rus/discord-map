@@ -9,9 +9,9 @@ const Error = ({ accessToken, setAccessToken }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    document.cookie = `access_token=${accessToken}; max-age=0; path=/`;
+    document.cookie = `access_token=${accessToken}; max-age=0; path=/mapagoryli`;
     setAccessToken(null);
-    navigate('/login');
+    navigate('/mapagoryli/login');
   };
 
   const NotFound = () => {
@@ -19,7 +19,7 @@ const Error = ({ accessToken, setAccessToken }) => {
       <Container>
         <img src={Susge} alt='Susge' />
         <h1>CZEGO TU SZUKASZ?</h1>
-        <Link to='/'>POWRÓT</Link>
+        <Link to='/mapagoryli'>POWRÓT</Link>
       </Container>
     );
   };
@@ -63,7 +63,7 @@ const Error = ({ accessToken, setAccessToken }) => {
 
   useEffect(() => {
     if (state === 'NOT_A_GORILLA') {
-      document.cookie = `access_token=${accessToken}; max-age=0; path=/`;
+      document.cookie = `access_token=${accessToken}; max-age=0; path=/mapagoryli`;
       setAccessToken(null);
     }
   }, [state, accessToken, setAccessToken]);

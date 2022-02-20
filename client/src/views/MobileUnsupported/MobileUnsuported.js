@@ -27,7 +27,7 @@ const MobileUnsuported = () => {
   return (
     <Wrapper>
       <img src={Kontent} alt='Demonzz piszący na telefonie' />
-      <h2>Mapa goryli nie wspiera telefonów.</h2>
+      <h2>Mapa goryli nie wspiera telefonów... jeszcze.</h2>
       <p>Przepraszam, ale musisz odpalić tą strone na kompie :(</p>
     </Wrapper>
   );
