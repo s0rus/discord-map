@@ -23,7 +23,7 @@ const CurrentUserInfo = ({ currentUser, accessToken, setAccessToken, setUsers, s
   const handleLogout = () => {
     document.cookie = `access_token=${accessToken}; max-age=0; path=/mapagoryli`;
     setAccessToken(null);
-    navigate('/mapagoryli/login');
+    navigate('/login');
   };
 
   const handlePeaceOut = async () => {

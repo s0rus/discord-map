@@ -11,7 +11,7 @@ const Error = ({ accessToken, setAccessToken }) => {
   const handleLogout = () => {
     document.cookie = `access_token=${accessToken}; max-age=0; path=/mapagoryli`;
     setAccessToken(null);
-    navigate('/mapagoryli/login');
+    navigate('/login');
   };
 
   const NotFound = () => {
@@ -19,7 +19,7 @@ const Error = ({ accessToken, setAccessToken }) => {
       <Container>
         <img src={Susge} alt='Susge' />
         <h1>CZEGO TU SZUKASZ?</h1>
-        <Link to='/mapagoryli'>POWRÓT</Link>
+        <Link to='/'>POWRÓT</Link>
       </Container>
     );
   };

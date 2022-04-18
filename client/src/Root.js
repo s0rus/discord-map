@@ -7,7 +7,7 @@ import { useWindowSize } from './utils/useWindowSize';
 import DiscordLogin from './views/DiscordLogin/DiscordLogin';
 import Error from './views/Error/Error';
 import Map from './views/Map/Map';
-import MobileUnsuported from './views/MobileUnsupported/MobileUnsuported';
+import MobileUnsupported from './views/MobileUnsupported/MobileUnsupported';
 
 const Root = () => {
   const [accessToken, setAccessToken] = useState(document.cookie.match('access_token')?.input.split('=')[1]);
@@ -19,22 +19,22 @@ const Root = () => {
       <Router>
         <Routes>
           <Route
-            path='/mapagoryli'
+            path='/'
             element={
-              width > 768 ? <Map accessToken={accessToken} setAccessToken={setAccessToken} /> : <MobileUnsuported />
+              width > 768 ? <Map accessToken={accessToken} setAccessToken={setAccessToken} /> : <MobileUnsupported />
             }
           />
           <Route
-            path='/mapagoryli/login'
+            path='/login'
             element={
               width > 768 ? (
                 <DiscordLogin accessToken={accessToken} setAccessToken={setAccessToken} />
               ) : (
-                <MobileUnsuported />
+                <MobileUnsupported />
               )
             }
           />
-          <Route path='/mapagoryli/*' element={<Error accessToken={accessToken} setAccessToken={setAccessToken} />} />
+          <Route path='/*' element={<Error accessToken={accessToken} setAccessToken={setAccessToken} />} />
         </Routes>
       </Router>
     </ThemeProvider>

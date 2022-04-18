@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MobileUnsuported = () => {
+const MobileUnsupported = () => {
   return (
     <Wrapper>
       <img src={Kontent} alt='Demonzz piszący na telefonie' />
@@ -33,4 +33,4 @@ const MobileUnsuported = () => {
   );
 };
 
-export default MobileUnsuported;
+export default MobileUnsupported;

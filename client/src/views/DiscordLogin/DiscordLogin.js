@@ -19,7 +19,7 @@ const DiscordLogin = ({ accessToken, setAccessToken }) => {
 
   useEffect(() => {
     if (accessToken) {
-      navigate('/mapagoryli');
+      navigate('/');
     }
   }, [accessToken, navigate]);
 
@@ -53,7 +53,7 @@ const DiscordLogin = ({ accessToken, setAccessToken }) => {
 
   const handleGoBack = async () => {
     await setErorr(null);
-    navigate('/mapagoryli/login');
+    navigate('/login');
   };
 
   return (

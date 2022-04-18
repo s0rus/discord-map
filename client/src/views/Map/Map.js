@@ -92,10 +92,10 @@ const Map = ({ accessToken, setAccessToken }) => {
             if (await getUserInfo()) {
               await getMarkers();
             } else {
-              navigate('/mapagoryli/yikes', { state: 'INSUFFICIENT_LEVEL' });
+              navigate('/yikes', { state: 'INSUFFICIENT_LEVEL' });
             }
           } else {
-            navigate('/mapagoryli/yikes', {
+            navigate('/yikes', {
               state: 'NOT_A_GORILLA',
             });
           }
@@ -107,7 +107,7 @@ const Map = ({ accessToken, setAccessToken }) => {
 
       handleLogin();
     } else {
-      navigate('/mapagoryli/login');
+      navigate('/login');
     }
   }, [accessToken, navigate]);
 
