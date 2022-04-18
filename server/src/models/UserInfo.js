@@ -10,7 +10,7 @@ const UserInfoSchema = new Schema(
     },
     nickname: {
       type: String,
-      required: true,
+      required: false,
     },
     userID: {
       type: Schema.Types.Decimal128,
@@ -42,7 +42,7 @@ const UserInfoSchema = new Schema(
     },
     serverAvatar: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {
