@@ -17,5 +17,5 @@ I used the following things to create this app:
 - EXPRESS.JS
 - AXIOS
 
-### PAGE AFTER AUTHORIZATION:
-[![mapa-goryli.jpg](https://i.postimg.cc/LXndnqsk/mapa-goryli.jpg)](https://postimg.cc/5YdKr2Lj)
+### PAGE NOW HAS 30 USERS SAVED:
+[![mapa-goryli-reel.jpg](https://i.postimg.cc/x1VScJpX/mapa-goryli-reel.jpg)](https://postimg.cc/bsg55JhP)
