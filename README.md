@@ -17,5 +17,5 @@ I used the following things to create this app:
 - EXPRESS.JS
 - AXIOS
 
-### Website looks likt this:
+### Website looks like this:
 [![mapa-goryli-reel.jpg](https://i.postimg.cc/x1VScJpX/mapa-goryli-reel.jpg)](https://postimg.cc/bsg55JhP)
